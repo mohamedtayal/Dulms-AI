@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files (contains API keys)
+.env
+.env.local
+.env.*.local
+
+# Electron build output
+release/

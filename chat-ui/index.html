@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOSTAFA AI - مساعدك الذكي</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  MOSTAFA AI - Modern Chat Interface                          ║
+    ║  Design: Neo-Glassmorphism with Cyan/Purple accents          ║
+    ║  RTL-First, Accessible, Performance-Optimized                ║
+    ╚══════════════════════════════════════════════════════════════╝
+  -->
+
+  <!-- Background Effects -->
+  <div class="bg-effects" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- Main App Container -->
+  <main class="app" id="app">
+    <!-- Chat Container -->
+    <div class="chat" id="chat">
+      
+      <!-- Header -->
+      <header class="chat__header">
+        <div class="chat__header-right">
+          <div class="chat__avatar">
+            <svg class="chat__avatar-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+            <span class="chat__avatar-status" aria-label="متصل"></span>
+          </div>
+          <div class="chat__info">
+            <h1 class="chat__title">MOSTAFA AI</h1>
+            <p class="chat__status" id="statusText">
+              <span class="chat__status-dot"></span>
+              متصل الآن
+            </p>
+          </div>
+        </div>
+        <div class="chat__header-left">
+          <button class="chat__btn chat__btn--icon" aria-label="المزيد من الخيارات" id="menuBtn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages Container -->
+      <div class="chat__messages" id="messagesContainer" role="log" aria-live="polite" aria-label="الرسائل">
+        <div class="chat__messages-inner" id="messagesList">
+          <!-- Messages will be inserted here -->
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="chat__typing" id="typingIndicator" aria-live="polite" hidden>
+        <div class="chat__typing-avatar">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          </svg>
+        </div>
+        <div class="chat__typing-bubble">
+          <span class="chat__typing-dot"></span>
+          <span class="chat__typing-dot"></span>
+          <span class="chat__typing-dot"></span>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <footer class="chat__footer">
+        <form class="chat__form" id="chatForm" action="#" method="post">
+          <div class="chat__input-wrapper">
+            <button type="button" class="chat__btn chat__btn--emoji" aria-label="إضافة إيموجي" id="emojiBtn">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+              </svg>
+            </button>
+            <input 
+              type="text" 
+              class="chat__input" 
+              id="messageInput" 
+              name="message"
+              placeholder="اكتب رسالتك هنا..."
+              autocomplete="off"
+              aria-label="اكتب رسالتك"
+            >
+            <button type="button" class="chat__btn chat__btn--attach" aria-label="إرفاق ملف" id="attachBtn">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
+              </svg>
+            </button>
+          </div>
+          <button type="submit" class="chat__btn chat__btn--send" id="sendBtn" aria-label="إرسال الرسالة" disabled>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            <span class="chat__btn-ripple"></span>
+          </button>
+        </form>
+      </footer>
+
+    </div>
+
+    <!-- Quick Actions Panel (Desktop) -->
+    <aside class="panel" id="panel" aria-label="إجراءات سريعة">
+      <h2 class="panel__title">إجراءات سريعة</h2>
+      <div class="panel__actions">
+        <button class="panel__action" data-prompt="ما هي آخر الأخبار التقنية؟">
+          <span class="panel__action-icon">📰</span>
+          <span>أخبار تقنية</span>
+        </button>
+        <button class="panel__action" data-prompt="اشرح لي مفهوم الذكاء الاصطناعي">
+          <span class="panel__action-icon">🤖</span>
+          <span>شرح AI</span>
+        </button>
+        <button class="panel__action" data-prompt="ساعدني في كتابة كود">
+          <span class="panel__action-icon">💻</span>
+          <span>مساعدة برمجية</span>
+        </button>
+        <button class="panel__action" data-prompt="ترجم لي هذا النص">
+          <span class="panel__action-icon">🌐</span>
+          <span>ترجمة</span>
+        </button>
+      </div>
+      <div class="panel__history">
+        <h3 class="panel__subtitle">المحادثات السابقة</h3>
+        <div class="panel__history-list" id="historyList">
+          <p class="panel__empty">لا توجد محادثات سابقة</p>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

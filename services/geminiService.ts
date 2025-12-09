@@ -1,32 +1,30 @@
 import { GoogleGenAI, Chat } from "@google/genai";
 
-// تم إدخال المفتاح مباشرة لحل مشكلة قراءة المتغيرات البيئية
-const API_KEY = "AIzaSyCCChhaN2oTSf50qcWtLBFJSH-h2DZ_-M4"; 
+// ⚠️ ضع الـ API Key في ملف .env.local
+// VITE_GEMINI_API_KEY=your_api_key_here
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
-// يمكن إزالة شرط الخطأ هذا الآن لأنه سيتم تعيين المفتاح مباشرة
-// if (!API_KEY) {
-//     throw new Error("Missing VITE_GEMINI_API_KEY environment variable.");
-// }
+if (!API_KEY) {
+    console.warn("⚠️ Missing VITE_GEMINI_API_KEY - Add it to .env.local file");
+}
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });
-
-const model = ai.models['gemini-2.5-flash'];
 
 export const createChatSession = (): Chat => {
     return ai.chats.create({
         model: 'gemini-2.5-flash',
         config: {
-            systemInstruction: "أنت مساعد ذكاء اصطناعي متطور واسمك محمد. مهمتك هي مساعدة المستخدمين بإجابات دقيقة ومفيدة. كن مهذباً وودوداً في جميع تفاعلاتك. تحدث باللغة العربية.",
+            systemInstruction: "أنت مساعد ذكاء اصطناعي متطور واسمك Dulms AI. مهمتك هي مساعدة المستخدمين بإجابات دقيقة ومفيدة. كن مهذباً وودوداً. تحدث باللغة العربية.",
         },
     });
 };
 
 export const sendMessageToGemini = async (chat: Chat, message: string): Promise<string> => {
     try {
-        const result = await chat.sendMessage({ message: message });
+        const result = await chat.sendMessage({ message });
         return result.text;
     } catch (error) {
-        console.error("Error sending message to Gemini:", error);
-        return "عذراً، حدث خطأ أثناء محاولة التواصل مع الذكاء الاصطناعي. يرجى المحاولة مرة أخرى.";
+        console.error("Error:", error);
+        return "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.";
     }
 };

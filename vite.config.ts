@@ -8,9 +8,8 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     
     return {
-        // 1. إضافة المسار الأساسي (Base Path) لـ GitHub Pages.
-        // يجب أن يتطابق 'chatbot-mohamed' مع اسم مستودعك.
-        base: '/chatbot-mohamed/', 
+        // Base path - use './' for Electron or '/' for local dev
+        base: './', 
 
         server: {
             port: 3000,
