@@ -8,8 +8,8 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     
     return {
-        // Base path - use './' for Electron or '/' for local dev
-        base: './', 
+        // Base path for GitHub Pages (repository name)
+        base: '/Dulms-AI/', 
 
         server: {
             port: 3000,
